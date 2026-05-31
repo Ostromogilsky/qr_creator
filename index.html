@@ -1,0 +1,21 @@
+<input id="text" placeholder="Введите ссылку">
+<button id="generate">Создать QR</button>
+<a id="download" download="qrcode.svg">Скачать SVG</a>
+
+<script type="module">
+import QRCode from "https://cdn.jsdelivr.net/npm/qrcode@1.5.4/+esm";
+
+document.getElementById("generate").onclick = async () => {
+    const text = document.getElementById("text").value;
+
+    const svg = await QRCode.toString(text, {
+        type: "svg"
+    });
+
+    const blob = new Blob([svg], { type: "image/svg+xml" });
+    const url = URL.createObjectURL(blob);
+
+    const download = document.getElementById("download");
+    download.href = url;
+};
+</script>
